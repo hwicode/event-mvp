@@ -111,6 +111,21 @@ class CouponIssuerTest {
     }
 
     @Test
+    void 빈_회원_리스트로_쿠폰을_발행하면_빈_리스트를_가져온다() {
+        // given
+        int couponLimit = 2;
+        CouponIssuer couponIssuer = createCouponIssuer(couponLimit);
+
+        List<String> memberIds = List.of();
+
+        // when
+        List<Coupon> coupons = couponIssuer.issue(memberIds);
+
+        // then
+        assertThat(coupons).isEmpty();
+    }
+
+    @Test
     void 동시에_3개의_스레드가_쿠폰들을_발급_받을_수_있다() throws InterruptedException {
         // given
         int couponLimit = 100;
