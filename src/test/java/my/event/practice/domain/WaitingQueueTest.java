@@ -206,6 +206,21 @@ class WaitingQueueTest {
     }
 
     @Test
+    void 대기열에서_회원들을_꺼낼_때_한계_반복_횟수에_도달하고_대기_인원이_0명이면_빈_리스트를_가져온다() {
+        // given
+        int repeatCount = 1;
+        int pollSize = 3;
+
+        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+
+        // when
+        List<String> memberIds = waitingQueue.pollMemberIds(repeatCount);
+
+        // then
+        assertThat(memberIds).isEmpty();
+    }
+
+    @Test
     void 대기열을_닫을_수_있다() {
         // given
         int repeatCount = 1;
