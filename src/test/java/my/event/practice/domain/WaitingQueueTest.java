@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 class WaitingQueueTest {
 
     private static WaitingQueue createWaitingQueue(int repeatCount, int pollingSize) {
-        return new WaitingQueue(repeatCount, pollingSize);
+        return new WaitingQueue(repeatCount, pollingSize, 1000);
     }
 
     @Test

@@ -7,12 +7,14 @@ public class WaitingQueue {
 
     private final int repeatLimit;
     private final int pollingSize;
+    private final int sleepMs;
     private final LinkedList<String> queue;
     private final AtomicBoolean isClose;
 
-    public WaitingQueue(int repeatLimit, int pollingSize) {
+    public WaitingQueue(int repeatLimit, int pollingSize, int sleepMs) {
         this.repeatLimit = repeatLimit;
         this.pollingSize = pollingSize;
+        this.sleepMs = sleepMs;
         this.queue = new LinkedList<>();
         isClose = new AtomicBoolean(false);
     }
@@ -72,6 +74,10 @@ public class WaitingQueue {
 
     public int getRepeatLimit() {
         return repeatLimit;
+    }
+
+    public int getSleepMs() {
+        return sleepMs;
     }
 
 }
