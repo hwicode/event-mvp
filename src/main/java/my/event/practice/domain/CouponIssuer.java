@@ -6,9 +6,11 @@ import java.util.List;
 public class CouponIssuer {
 
     private int couponLimit;
+    private volatile boolean isClose;
 
     public CouponIssuer(int couponLimit) {
         this.couponLimit = couponLimit;
+        isClose = false;
     }
 
     public synchronized List<Coupon> issue(List<String> memberIds) {
@@ -26,6 +28,12 @@ public class CouponIssuer {
             coupons.add(new Coupon(id));
         }
         couponLimit = 0;
+        isClose = true;
         return coupons;
+    }
+
+    // 어느 정도의 시간 오차 허용
+    public boolean isClose() {
+        return isClose;
     }
 }
