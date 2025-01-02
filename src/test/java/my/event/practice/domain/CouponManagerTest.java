@@ -1,6 +1,5 @@
 package my.event.practice.domain;
 
-import my.event.practice.infra.CouponIssuer;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

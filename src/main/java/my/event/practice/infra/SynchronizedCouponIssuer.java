@@ -1,16 +1,17 @@
 package my.event.practice.infra;
 
 import my.event.practice.domain.Coupon;
+import my.event.practice.domain.CouponIssuer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CouponIssuer {
+public class SynchronizedCouponIssuer implements CouponIssuer {
 
     private int couponLimit;
     private volatile boolean isClose;
 
-    public CouponIssuer(int couponLimit) {
+    public SynchronizedCouponIssuer(int couponLimit) {
         this.couponLimit = couponLimit;
         isClose = false;
     }
