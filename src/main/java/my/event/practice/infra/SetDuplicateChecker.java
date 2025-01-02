@@ -1,13 +1,15 @@
 package my.event.practice.infra;
 
+import my.event.practice.domain.DuplicateChecker;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class DuplicateChecker {
+public class SetDuplicateChecker implements DuplicateChecker {
 
     private final Set<String> idStore;
 
-    public DuplicateChecker() {
+    public SetDuplicateChecker() {
         this.idStore = new HashSet<>();
     }
 

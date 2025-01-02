@@ -9,20 +9,20 @@ import java.util.concurrent.Executors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class DuplicateCheckerTest {
+class SetDuplicateCheckerTest {
 
-    private static DuplicateChecker createDuplicateChecker() {
-        return new DuplicateChecker();
+    private static SetDuplicateChecker createDuplicateChecker() {
+        return new SetDuplicateChecker();
     }
 
     @Test
     void 회원_아이디가_중복되지_않으면_false를_리턴한다() {
         // given
         String memberId = "memberId";
-        DuplicateChecker duplicateChecker = createDuplicateChecker();
+        SetDuplicateChecker setDuplicateChecker = createDuplicateChecker();
 
         // when
-        boolean isDuplicate = duplicateChecker.check(memberId);
+        boolean isDuplicate = setDuplicateChecker.check(memberId);
 
         // then
         assertThat(isDuplicate).isFalse();
@@ -32,13 +32,13 @@ class DuplicateCheckerTest {
     void 회원_아이디가_중복되면_예외가_발생한다() {
         // given
         String memberId = "memberId";
-        DuplicateChecker duplicateChecker = createDuplicateChecker();
+        SetDuplicateChecker setDuplicateChecker = createDuplicateChecker();
 
         // wnen
-        duplicateChecker.check(memberId);
+        setDuplicateChecker.check(memberId);
 
         // then
-        assertThatThrownBy(() -> duplicateChecker.check(memberId))
+        assertThatThrownBy(() -> setDuplicateChecker.check(memberId))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -46,7 +46,7 @@ class DuplicateCheckerTest {
     void 동시에_100명의_유저가_중복_검사를_할_수_있다() throws InterruptedException {
         // given
         String memberId = "memberId";
-        DuplicateChecker duplicateChecker = createDuplicateChecker();
+        SetDuplicateChecker setDuplicateChecker = createDuplicateChecker();
 
         int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -57,7 +57,7 @@ class DuplicateCheckerTest {
             String newMemberId = "memberId" + i;
             executorService.submit(() -> {
                 try {
-                    duplicateChecker.check(newMemberId);
+                    setDuplicateChecker.check(newMemberId);
                 } finally {
                     latch.countDown();
                 }
@@ -67,11 +67,11 @@ class DuplicateCheckerTest {
         latch.await();
 
         // then
-        assertThatThrownBy(() -> duplicateChecker.check(memberId + 1))
+        assertThatThrownBy(() -> setDuplicateChecker.check(memberId + 1))
                 .isInstanceOf(RuntimeException.class);
-        assertThatThrownBy(() -> duplicateChecker.check(memberId + 50))
+        assertThatThrownBy(() -> setDuplicateChecker.check(memberId + 50))
                 .isInstanceOf(RuntimeException.class);
-        assertThatThrownBy(() -> duplicateChecker.check(memberId + 100))
+        assertThatThrownBy(() -> setDuplicateChecker.check(memberId + 100))
                 .isInstanceOf(RuntimeException.class);
     }
 }
