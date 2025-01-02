@@ -2,7 +2,6 @@ package my.event.practice.domain;
 
 import lombok.RequiredArgsConstructor;
 import my.event.practice.infra.CouponIssuer;
-import my.event.practice.infra.WaitingQueue;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

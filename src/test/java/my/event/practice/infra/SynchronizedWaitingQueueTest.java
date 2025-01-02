@@ -13,20 +13,20 @@ import java.util.concurrent.Future;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class WaitingQueueTest {
+class SynchronizedWaitingQueueTest {
 
-    private static WaitingQueue createWaitingQueue(int repeatCount, int pollingSize) {
-        return new WaitingQueue(repeatCount, pollingSize, 1000);
+    private static SynchronizedWaitingQueue createWaitingQueue(int repeatCount, int pollingSize) {
+        return new SynchronizedWaitingQueue(repeatCount, pollingSize, 1000);
     }
 
     @Test
     void 대기열에_회원_아이디를_추가할_수_있다() {
         // given
         String memberId = "memberId";
-        WaitingQueue waitingQueue = createWaitingQueue(3, 1);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when
-        int peopleAhead = waitingQueue.add(memberId);
+        int peopleAhead = synchronizedWaitingQueue.add(memberId);
 
         // then
         assertThat(peopleAhead).isEqualTo(1);
@@ -37,14 +37,14 @@ class WaitingQueueTest {
         // given
         int waitingPerson = 3;
         String memberId = "memberId";
-        WaitingQueue waitingQueue = createWaitingQueue(3, 1);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         for (int i = 0; i < waitingPerson; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
         // when
-        int waitingNumber = waitingQueue.add(memberId);
+        int waitingNumber = synchronizedWaitingQueue.add(memberId);
 
         // then
         assertThat(waitingNumber).isEqualTo(waitingPerson + 1);
@@ -54,13 +54,13 @@ class WaitingQueueTest {
     void 회원_아이디를_추가할_때_대기열이_닫혀있으면_에러가_발생한다() {
         // given
         String memberId = "memberId";
-        WaitingQueue waitingQueue = createWaitingQueue(3, 1);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when
-        waitingQueue.close();
+        synchronizedWaitingQueue.close();
 
         // then
-        assertThatThrownBy(() -> waitingQueue.add(memberId))
+        assertThatThrownBy(() -> synchronizedWaitingQueue.add(memberId))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -70,18 +70,18 @@ class WaitingQueueTest {
         String memberId = "memberId";
         int count = 100;
 
-        WaitingQueue waitingQueue = createWaitingQueue(3, 1);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when
         for (int i = 1; i <= count; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
         // then
         String firstMember = memberId + 1;
         String lastMember = memberId + 100;
-        assertThat(waitingQueue.getOrder(firstMember)).isZero();
-        assertThat(waitingQueue.getOrder(lastMember)).isEqualTo(99);
+        assertThat(synchronizedWaitingQueue.getOrder(firstMember)).isZero();
+        assertThat(synchronizedWaitingQueue.getOrder(lastMember)).isEqualTo(99);
     }
 
     @Test
@@ -89,10 +89,10 @@ class WaitingQueueTest {
         // given
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(3, 1);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when then
-        assertThatThrownBy(() -> waitingQueue.getOrder(memberId))
+        assertThatThrownBy(() -> synchronizedWaitingQueue.getOrder(memberId))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -101,14 +101,14 @@ class WaitingQueueTest {
         // given
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(3, 1);
-        waitingQueue.add(memberId);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
+        synchronizedWaitingQueue.add(memberId);
 
         // when
-        waitingQueue.close();
+        synchronizedWaitingQueue.close();
 
         // then
-        assertThatThrownBy(() -> waitingQueue.getOrder(memberId))
+        assertThatThrownBy(() -> synchronizedWaitingQueue.getOrder(memberId))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -119,13 +119,13 @@ class WaitingQueueTest {
         int repeatCount = 1;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, count);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, count);
         for (int i = 0; i < count; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
         // when
-        List<String> memberIds = waitingQueue.pollMemberIds(repeatCount);
+        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).hasSize(count);
@@ -138,15 +138,15 @@ class WaitingQueueTest {
         int repeatCount = 1;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, count);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, count);
         for (int i = 0; i < count; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
-        waitingQueue.close();
+        synchronizedWaitingQueue.close();
 
         // when then
-        assertThatThrownBy(() -> waitingQueue.pollMemberIds(repeatCount))
+        assertThatThrownBy(() -> synchronizedWaitingQueue.pollMemberIds(repeatCount))
                 .isInstanceOf(RuntimeException.class);
     }
 
@@ -158,13 +158,13 @@ class WaitingQueueTest {
         int lessPollSize = pollSize - 1;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
         for (int i = 0; i < lessPollSize; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
         // when
-        List<String> memberIds = waitingQueue.pollMemberIds(0);
+        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(0);
 
         // then
         assertThat(memberIds).isEmpty();
@@ -177,13 +177,13 @@ class WaitingQueueTest {
         int pollSize = 3;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
         for (int i = 0; i < pollSize; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
         // when
-        List<String> memberIds = waitingQueue.pollMemberIds(0);
+        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(0);
 
         // then
         assertThat(memberIds).hasSize(pollSize);
@@ -197,13 +197,13 @@ class WaitingQueueTest {
         int lessPollSize = pollSize - 1;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
         for (int i = 0; i < lessPollSize; i++) {
-            waitingQueue.add(memberId + i);
+            synchronizedWaitingQueue.add(memberId + i);
         }
 
         // when
-        List<String> memberIds = waitingQueue.pollMemberIds(repeatCount);
+        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).hasSize(lessPollSize);
@@ -215,10 +215,10 @@ class WaitingQueueTest {
         int repeatCount = 1;
         int pollSize = 3;
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
         // when
-        List<String> memberIds = waitingQueue.pollMemberIds(repeatCount);
+        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).isEmpty();
@@ -230,10 +230,10 @@ class WaitingQueueTest {
         int repeatCount = 1;
         int pollSize = 3;
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
         // when
-        boolean isClose = waitingQueue.close();
+        boolean isClose = synchronizedWaitingQueue.close();
 
         // then
         assertThat(isClose).isTrue();
@@ -245,11 +245,11 @@ class WaitingQueueTest {
         int repeatCount = 1;
         int pollSize = 3;
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
-        waitingQueue.close();
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
+        synchronizedWaitingQueue.close();
 
         // when
-        boolean isClose = waitingQueue.close();
+        boolean isClose = synchronizedWaitingQueue.close();
 
         // then
         assertThat(isClose).isFalse();
@@ -262,7 +262,7 @@ class WaitingQueueTest {
         int pollSize = 3;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
         int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -273,7 +273,7 @@ class WaitingQueueTest {
             String newMemberId = "memberId" + i;
             executorService.submit(() -> {
                 try {
-                    waitingQueue.add(newMemberId);
+                    synchronizedWaitingQueue.add(newMemberId);
                 } finally {
                     latch.countDown();
                 }
@@ -283,7 +283,7 @@ class WaitingQueueTest {
         latch.await();
 
         // then
-        int waitingNumber = waitingQueue.add(memberId);
+        int waitingNumber = synchronizedWaitingQueue.add(memberId);
         assertThat(waitingNumber).isEqualTo(threadCount + 1);
     }
 
@@ -294,7 +294,7 @@ class WaitingQueueTest {
         int pollSize = 3;
         String memberId = "memberId";
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
         int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
@@ -309,7 +309,7 @@ class WaitingQueueTest {
             // 대기열에 유저 추가
             executorService.submit(() -> {
                 try {
-                    waitingQueue.add(newMemberId);
+                    synchronizedWaitingQueue.add(newMemberId);
                 } finally {
                     latch.countDown();
                 }
@@ -320,7 +320,7 @@ class WaitingQueueTest {
         for (int i = 0; i < 2; i++) {
             executorService.submit(() -> {
                 try {
-                    waitingQueue.pollMemberIds(0);
+                    synchronizedWaitingQueue.pollMemberIds(0);
                 } finally {
                     latch.countDown();
                 }
@@ -330,7 +330,7 @@ class WaitingQueueTest {
         latch.await();
 
         // then
-        int waitingNumber = waitingQueue.add(memberId);
+        int waitingNumber = synchronizedWaitingQueue.add(memberId);
         assertThat(waitingNumber).isEqualTo(threadCount + 1 - (pollCount * pollSize));
     }
 
@@ -340,7 +340,7 @@ class WaitingQueueTest {
         int repeatCount = 1;
         int pollSize = 3;
 
-        WaitingQueue waitingQueue = createWaitingQueue(repeatCount, pollSize);
+        SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
         int threadCount = 3;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
@@ -351,7 +351,7 @@ class WaitingQueueTest {
         for (int i = 1; i <= threadCount; i++) {
             Future<Boolean> submit = executorService.submit(() -> {
                 try {
-                    return waitingQueue.close();
+                    return synchronizedWaitingQueue.close();
                 } finally {
                     latch.countDown();
                 }
@@ -376,7 +376,7 @@ class WaitingQueueTest {
                 .contains(Boolean.FALSE)
                 .doesNotContain((Boolean) null);
 
-        assertThat(waitingQueue.isClose()).isTrue();
+        assertThat(synchronizedWaitingQueue.isClose()).isTrue();
     }
 
 }

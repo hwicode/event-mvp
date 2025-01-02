@@ -1,9 +1,11 @@
 package my.event.practice.infra;
 
+import my.event.practice.domain.WaitingQueue;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class WaitingQueue {
+public class SynchronizedWaitingQueue implements WaitingQueue {
 
     private final int repeatLimit;
     private final int pollingSize;
@@ -11,7 +13,7 @@ public class WaitingQueue {
     private final LinkedList<String> queue;
     private final AtomicBoolean isClose;
 
-    public WaitingQueue(int repeatLimit, int pollingSize, int sleepMs) {
+    public SynchronizedWaitingQueue(int repeatLimit, int pollingSize, int sleepMs) {
         this.repeatLimit = repeatLimit;
         this.pollingSize = pollingSize;
         this.sleepMs = sleepMs;
