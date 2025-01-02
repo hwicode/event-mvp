@@ -12,8 +12,6 @@ public interface WaitingQueue {
 
     boolean close();
 
-    boolean isClose();
-
     int getRepeatLimit();
 
     int getSleepMs();

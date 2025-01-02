@@ -70,7 +70,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
         return isClose.compareAndSet(false, true);
     }
 
-    public boolean isClose() {
+    private boolean isClose() {
         return isClose.get();
     }
 

@@ -375,8 +375,6 @@ class SynchronizedWaitingQueueTest {
                 .containsOnlyOnce(Boolean.TRUE)
                 .contains(Boolean.FALSE)
                 .doesNotContain((Boolean) null);
-
-        assertThat(synchronizedWaitingQueue.isClose()).isTrue();
     }
 
 }
