@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class EventService {
+public class EventWaitingService {
 
     private final DuplicateChecker duplicateChecker;
     private final WaitingQueue waitingQueue;
