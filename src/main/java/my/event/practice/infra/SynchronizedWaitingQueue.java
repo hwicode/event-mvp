@@ -1,10 +1,13 @@
 package my.event.practice.infra;
 
 import my.event.practice.domain.WaitingQueue;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Component
 public class SynchronizedWaitingQueue implements WaitingQueue {
 
     private final int repeatLimit;
@@ -13,7 +16,11 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
     private final LinkedList<String> queue;
     private final AtomicBoolean isClose;
 
-    public SynchronizedWaitingQueue(int repeatLimit, int pollingSize, int sleepMs) {
+    public SynchronizedWaitingQueue(
+            @Value("${waiting-queue.repeat-limit:3}")int repeatLimit,
+            @Value("${waiting-queue.polling-size:100}")int pollingSize,
+            @Value("${waiting-queue.sleep-ms:3000}")int sleepMs
+    ) {
         this.repeatLimit = repeatLimit;
         this.pollingSize = pollingSize;
         this.sleepMs = sleepMs;

@@ -2,16 +2,21 @@ package my.event.practice.infra;
 
 import my.event.practice.domain.Coupon;
 import my.event.practice.domain.CouponIssuer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SynchronizedCouponIssuer implements CouponIssuer {
 
     private int couponLimit;
     private volatile boolean isClose;
 
-    public SynchronizedCouponIssuer(int couponLimit) {
+    public SynchronizedCouponIssuer(
+            @Value("${coupon.limit:100}")int couponLimit
+    ) {
         this.couponLimit = couponLimit;
         isClose = false;
     }
