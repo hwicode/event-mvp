@@ -1,4 +1,4 @@
-package my.event.practice.domain;
+package my.event.practice.infra;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;

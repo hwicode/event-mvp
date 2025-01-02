@@ -1,4 +1,6 @@
-package my.event.practice.domain;
+package my.event.practice.infra;
+
+import my.event.practice.domain.Coupon;
 
 import java.util.ArrayList;
 import java.util.List;

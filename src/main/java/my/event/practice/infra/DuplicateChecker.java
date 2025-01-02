@@ -1,4 +1,4 @@
-package my.event.practice.domain;
+package my.event.practice.infra;
 
 import java.util.HashSet;
 import java.util.Set;
