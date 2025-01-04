@@ -1,6 +1,8 @@
 package my.event.practice.web.login;
 
 import lombok.RequiredArgsConstructor;
+import my.event.practice.support.error.CoreException;
+import my.event.practice.support.error.ErrorType;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,7 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
 
     private String extractAccessToken(String authorization) {
         if (authorization == null) {
-            throw new NullPointerException();
+            throw new CoreException(ErrorType.EMPTY_AUTHORIZATION_HEADER_ERROR);
         }
         return authorization.replace(BEARER, "");
     }

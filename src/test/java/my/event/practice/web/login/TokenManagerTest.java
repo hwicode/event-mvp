@@ -1,5 +1,6 @@
 package my.event.practice.web.login;
 
+import my.event.practice.support.error.CoreException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ class TokenManagerTest {
 
         // when then
         assertThatThrownBy(() -> tokenManager.getMemberId(token))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 
 }

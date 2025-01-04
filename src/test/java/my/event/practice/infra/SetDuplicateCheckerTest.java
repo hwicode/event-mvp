@@ -1,5 +1,6 @@
 package my.event.practice.infra;
 
+import my.event.practice.support.error.CoreException;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CountDownLatch;
@@ -39,7 +40,7 @@ class SetDuplicateCheckerTest {
 
         // then
         assertThatThrownBy(() -> setDuplicateChecker.check(memberId))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 
     @Test
@@ -68,10 +69,10 @@ class SetDuplicateCheckerTest {
 
         // then
         assertThatThrownBy(() -> setDuplicateChecker.check(memberId + 1))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
         assertThatThrownBy(() -> setDuplicateChecker.check(memberId + 50))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
         assertThatThrownBy(() -> setDuplicateChecker.check(memberId + 100))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 }

@@ -1,6 +1,8 @@
 package my.event.practice.infra;
 
 import my.event.practice.domain.WaitingQueue;
+import my.event.practice.support.error.CoreException;
+import my.event.practice.support.error.ErrorType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +32,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
 
     public synchronized int add(String memberId) {
         if (isClose()) {
-            throw new RuntimeException();
+            throw new CoreException(ErrorType.QUEUE_CLOSED_ERROR);
         }
         queue.offer(memberId);
         return queue.size();
@@ -40,14 +42,14 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
     public int getOrder(String memberId) {
         int order = queue.indexOf(memberId);
         if (isClose() || order == -1) {
-            throw new NoSuchElementException();
+            throw new CoreException(ErrorType.MEMBER_NOT_IN_QUEUE_ERROR);
         }
         return order;
     }
 
     public synchronized List<String> pollMemberIds(int repeatCount) {
         if (isClose()) {
-            throw new RuntimeException();
+            throw new CoreException(ErrorType.QUEUE_CLOSED_ERROR);
         }
         if (!isMaxRepeat(repeatCount) && isLowItems()) {
             return Collections.emptyList();

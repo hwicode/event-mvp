@@ -1,6 +1,7 @@
 package my.event.practice.infra;
 
 
+import my.event.practice.support.error.CoreException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ class SynchronizedWaitingQueueTest {
 
         // then
         assertThatThrownBy(() -> synchronizedWaitingQueue.add(memberId))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 
     @Test
@@ -93,7 +94,7 @@ class SynchronizedWaitingQueueTest {
 
         // when then
         assertThatThrownBy(() -> synchronizedWaitingQueue.getOrder(memberId))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 
     @Test
@@ -109,7 +110,7 @@ class SynchronizedWaitingQueueTest {
 
         // then
         assertThatThrownBy(() -> synchronizedWaitingQueue.getOrder(memberId))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 
     @Test
@@ -147,7 +148,7 @@ class SynchronizedWaitingQueueTest {
 
         // when then
         assertThatThrownBy(() -> synchronizedWaitingQueue.pollMemberIds(repeatCount))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(CoreException.class);
     }
 
     @Test

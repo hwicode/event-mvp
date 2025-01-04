@@ -5,6 +5,8 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import my.event.practice.support.error.CoreException;
+import my.event.practice.support.error.ErrorType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +54,7 @@ public class TokenManager {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (JwtException | IllegalArgumentException e) {
-            throw new RuntimeException();
+            throw new CoreException(ErrorType.INVALID_AUTH_TOKEN_ERROR);
         }
     }
 }
