@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
 
     DEFAULT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에서 예기치 못한 에러가 발생했습니다.",
-            LogLevel.ERROR);
+            LogLevel.ERROR),
+
+    MISSING_PARAMETER_ERROR(HttpStatus.BAD_REQUEST, "회원 아이디 없이 로그인 요청을 보냈습니다",
+                  LogLevel.INFO);
 
     private final HttpStatus status;
 
