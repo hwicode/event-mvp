@@ -1,5 +1,7 @@
 package my.event.practice.domain;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -8,6 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings({"InnerClassMayBeStatic", "NonAsciiCharacters"})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class CouponManagerTest {
 
     @Test

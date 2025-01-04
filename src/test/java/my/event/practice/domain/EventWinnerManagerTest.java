@@ -1,5 +1,7 @@
 package my.event.practice.domain;
 
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -9,6 +11,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings({"InnerClassMayBeStatic", "NonAsciiCharacters"})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class EventWinnerManagerTest {
 
     @Test

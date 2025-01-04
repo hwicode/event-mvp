@@ -1,11 +1,15 @@
 package my.event.practice.web.login;
 
 import my.event.practice.support.error.CoreException;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@SuppressWarnings({"InnerClassMayBeStatic", "NonAsciiCharacters"})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class TokenManagerTest {
 
     @Test

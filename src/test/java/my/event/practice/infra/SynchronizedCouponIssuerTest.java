@@ -1,6 +1,8 @@
 package my.event.practice.infra;
 
 import my.event.practice.domain.Coupon;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings({"InnerClassMayBeStatic", "NonAsciiCharacters"})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SynchronizedCouponIssuerTest {
 
     private static SynchronizedCouponIssuer createCouponIssuer(int couponLimit) {

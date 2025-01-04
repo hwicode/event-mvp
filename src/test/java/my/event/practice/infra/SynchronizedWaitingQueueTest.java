@@ -2,6 +2,8 @@ package my.event.practice.infra;
 
 
 import my.event.practice.support.error.CoreException;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.concurrent.Future;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@SuppressWarnings({"InnerClassMayBeStatic", "NonAsciiCharacters"})
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SynchronizedWaitingQueueTest {
 
     private static SynchronizedWaitingQueue createWaitingQueue(int repeatCount, int pollingSize) {
