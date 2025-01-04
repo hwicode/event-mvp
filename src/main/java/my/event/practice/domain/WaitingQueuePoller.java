@@ -24,16 +24,24 @@ public class WaitingQueuePoller {
             if (!memberIds.isEmpty()) {
                 return memberIds;
             }
-            sleep(sleepMs);
+
+            boolean isInterrupted = sleep(sleepMs);
+            if (isInterrupted) break;
         }
         return Collections.emptyList();
     }
 
-    private void sleep(int ms) {
+    // 자바에서는 블로킹 메서드들의 내부에서 스레드의 인터럽트 상태를 확인함
+    // 그래서 블로킹된 와중에 스레드가 인터럽트 상태로 변하면 InterruptedException 발생
+    // InterruptedException 예외가 발생하면 인터럽트 상태가 clear 됨
+    private boolean sleep(int sleepMs) {
         try {
-            Thread.sleep(ms);
+            Thread.sleep(sleepMs);
         } catch (InterruptedException e) {
-            throw new RuntimeException();
+            Thread.currentThread().interrupt();
+            return true;
         }
+        return false;
     }
+
 }
