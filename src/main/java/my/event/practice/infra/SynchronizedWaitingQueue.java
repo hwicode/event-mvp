@@ -19,7 +19,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
     public SynchronizedWaitingQueue(
             @Value("${waiting-queue.repeat-limit:3}")int repeatLimit,
             @Value("${waiting-queue.polling-size:100}")int pollingSize,
-            @Value("${waiting-queue.sleep-ms:3000}")int sleepMs
+            @Value("${waiting-queue.sleep-ms:1000}")int sleepMs
     ) {
         this.repeatLimit = repeatLimit;
         this.pollingSize = pollingSize;
