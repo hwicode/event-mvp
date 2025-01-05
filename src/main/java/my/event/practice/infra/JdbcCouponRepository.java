@@ -1,6 +1,7 @@
 package my.event.practice.infra;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import my.event.practice.domain.Coupon;
 import my.event.practice.domain.CouponRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class JdbcCouponRepository implements CouponRepository {
@@ -29,6 +31,7 @@ public class JdbcCouponRepository implements CouponRepository {
                     ps.setTimestamp(2, Timestamp.valueOf(time.now()));
                 }
         );
+        log.info("[JdbcCouponRepository][saveAll] Coupons are saved");
         return coupons;
     }
 

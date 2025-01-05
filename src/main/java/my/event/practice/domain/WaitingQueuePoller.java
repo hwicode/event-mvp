@@ -1,11 +1,13 @@
 package my.event.practice.domain;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class WaitingQueuePoller {
@@ -16,18 +18,20 @@ public class WaitingQueuePoller {
         int repeatLimit = waitingQueue.getRepeatLimit();
         int sleepMs = waitingQueue.getSleepMs();
 
-        List<String> memberIds;
-
         // 재시도
         for (int repeatCount = 1; repeatCount <= repeatLimit; repeatCount++) {
-            memberIds = waitingQueue.pollMemberIds(repeatCount);
+            List<String> memberIds = waitingQueue.pollMemberIds(repeatCount);
+
             if (!memberIds.isEmpty()) {
+                log.info("[WaitingQueuePoller][poll] Success on repeatCount={}, memberIds={}", repeatCount, memberIds);
                 return memberIds;
             }
 
+            // 작업을 최대한 일찍 끝내기 위해 빈 리스트를 반환하는 방식 사용
             boolean isInterrupted = sleep(sleepMs);
             if (isInterrupted) break;
         }
+        log.info("[WaitingQueuePoller][poll] Polling completed, no members found");
         return Collections.emptyList();
     }
 

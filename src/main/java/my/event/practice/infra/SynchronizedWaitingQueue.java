@@ -1,5 +1,6 @@
 package my.event.practice.infra;
 
+import lombok.extern.slf4j.Slf4j;
 import my.event.practice.domain.WaitingQueue;
 import my.event.practice.support.error.CoreException;
 import my.event.practice.support.error.ErrorType;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Slf4j
 @Component
 public class SynchronizedWaitingQueue implements WaitingQueue {
 
@@ -35,6 +37,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
             throw new CoreException(ErrorType.QUEUE_CLOSED_ERROR);
         }
         queue.offer(memberId);
+        log.info("[SynchronizedWaitingQueue][add] Waiting queue add memberId={}, queueSize={}", memberId, queue.size());
         return queue.size();
     }
 
