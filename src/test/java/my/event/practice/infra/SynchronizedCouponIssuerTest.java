@@ -131,6 +131,48 @@ class SynchronizedCouponIssuerTest {
     }
 
     @Test
+    void 쿠폰_수량과_회원_수가_같으면_쿠폰_발급기는_닫힌다() {
+        // given
+        int couponLimit = 3;
+        SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
+
+        String memberId1 = "memberId1";
+        String memberId2 = "memberId2";
+        String memberId3 = "memberId3";
+        List<String> memberIds = List.of(
+                memberId1, memberId2, memberId3
+        );
+
+        synchronizedCouponIssuer.issue(memberIds);
+
+        // when
+        boolean isClose = synchronizedCouponIssuer.isClose();
+
+        // then
+        assertThat(isClose).isTrue();
+    }
+
+    @Test
+    void 쿠폰_수량보다_회원_수가_많으면_쿠폰_수량_만큼만_쿠폰을_발행하고_쿠폰_발급기는_닫힌다() {
+        // given
+        int couponLimit = 1;
+        SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
+
+        String memberId1 = "memberId1";
+        String memberId2 = "memberId2";
+        List<String> memberIds = List.of(
+                memberId1, memberId2
+        );
+
+        // when
+        List<Coupon> coupons = synchronizedCouponIssuer.issue(memberIds);
+
+        // then
+        assertThat(coupons).hasSize(1);
+        assertThat(synchronizedCouponIssuer.isClose()).isTrue();
+    }
+
+    @Test
     void 동시에_3개의_스레드가_쿠폰들을_발급_받을_수_있다() throws InterruptedException {
         // given
         int couponLimit = 100;

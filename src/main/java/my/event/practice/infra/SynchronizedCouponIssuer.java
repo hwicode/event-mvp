@@ -25,6 +25,9 @@ public class SynchronizedCouponIssuer implements CouponIssuer {
         if (couponLimit == 0) return new ArrayList<>();
         if (couponLimit >= memberIds.size()) {
             couponLimit -= memberIds.size();
+            if (couponLimit == 0) {
+                isClose = true;
+            }
             return memberIds.stream()
                     .map(Coupon::new)
                     .toList();
