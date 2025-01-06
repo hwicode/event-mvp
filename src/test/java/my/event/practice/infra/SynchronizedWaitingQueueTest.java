@@ -105,9 +105,7 @@ class SynchronizedWaitingQueueTest {
     void 대기열에서_회원의_순서를_가져올_때_대기열이_닫혀있으면_에러가_발생한다() {
         // given
         String memberId = "memberId";
-
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
-        synchronizedWaitingQueue.add(memberId);
 
         // when
         synchronizedWaitingQueue.close();
@@ -141,12 +139,8 @@ class SynchronizedWaitingQueueTest {
         // given
         int count = 3;
         int repeatCount = 1;
-        String memberId = "memberId";
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, count);
-        for (int i = 0; i < count; i++) {
-            synchronizedWaitingQueue.add(memberId + i);
-        }
 
         synchronizedWaitingQueue.close();
 

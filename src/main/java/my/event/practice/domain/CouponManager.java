@@ -19,8 +19,11 @@ public class CouponManager {
         log.info("[CouponManager][issueCoupons] Successfully issue coupons, coupons={}", coupons);
 
         if (couponIssuer.isClose()) {
-            log.info("[CouponManager][issueCoupons] Closing waiting queue");
-            waitingQueue.close();
+            log.info("[CouponManager][issueCoupons] Coupon issuer is closed");
+
+            if (waitingQueue.close()) {
+                log.info("[CouponManager][issueCoupons] Closing waiting queue");
+            }
         }
         return coupons;
     }

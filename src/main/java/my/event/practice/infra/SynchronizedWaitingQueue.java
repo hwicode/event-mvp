@@ -78,8 +78,14 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
         return repeatLimit == repeatCount;
     }
 
+    // queue.isEmpty()와 isClose.compareAndSet() 사이에 원자성이 부족함
+    // 그래서 isClose를 true로 변경시키지 전에 큐에 값이 추가될 수 있음
+    // 그러나 메서드 목적은 적절한 때에 대기 큐를 닫는 것이므로 위의 문제가 상관 없기에 락 X
     public boolean close() {
-        return isClose.compareAndSet(false, true);
+        if (queue.isEmpty()) {
+            return isClose.compareAndSet(false, true);
+        }
+        return false;
     }
 
     private boolean isClose() {
