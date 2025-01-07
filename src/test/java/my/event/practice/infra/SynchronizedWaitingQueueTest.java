@@ -135,18 +135,19 @@ class SynchronizedWaitingQueueTest {
     }
 
     @Test
-    void 대기열에서_회원들을_꺼낼_때_대기열이_닫혀있으면_에러가_발생한다() {
+    void 대기열에서_회원들을_꺼낼_때_대기열이_닫혀있으면_빈_리스트를_리턴한다() {
         // given
         int count = 3;
         int repeatCount = 1;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, count);
-
         synchronizedWaitingQueue.close();
 
-        // when then
-        assertThatThrownBy(() -> synchronizedWaitingQueue.pollMemberIds(repeatCount))
-                .isInstanceOf(CoreException.class);
+        // when
+        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
+
+        // then
+        assertThat(memberIds).isEmpty();
     }
 
     @Test

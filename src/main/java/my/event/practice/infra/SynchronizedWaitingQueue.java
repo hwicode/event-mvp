@@ -52,7 +52,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
 
     public synchronized List<String> pollMemberIds(int repeatCount) {
         if (isClose()) {
-            throw new CoreException(ErrorType.QUEUE_CLOSED_ERROR);
+            return Collections.emptyList();
         }
         if (!isMaxRepeat(repeatCount) && isLowItems()) {
             return Collections.emptyList();
