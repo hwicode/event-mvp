@@ -27,7 +27,7 @@ public class JdbcCouponRepository implements CouponRepository {
         jdbcTemplate.batchUpdate(
                 sql, coupons, coupons.size(),
                 (ps, coupon) -> {
-                    ps.setString(1, coupon.memberId());
+                    ps.setString(1, coupon.getMemberId());
                     ps.setTimestamp(2, Timestamp.valueOf(time.now()));
                 }
         );
@@ -38,7 +38,7 @@ public class JdbcCouponRepository implements CouponRepository {
     public Optional<Coupon> findByMemberId(String memberId) {
         String sql = "SELECT member_id, created_at FROM coupon WHERE member_id = ?";
         try {
-            return Optional.of(jdbcTemplate.queryForObject(sql, couponRowMapper(), memberId));
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, couponRowMapper(), memberId));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }

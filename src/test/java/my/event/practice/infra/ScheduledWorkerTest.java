@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 @SpringBootTest
 class ScheduledWorkerTest {
 
-    @MockitoBean
+    @MockBean
     CouponIssueService couponIssueService;
 
     @Test

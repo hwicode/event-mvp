@@ -18,9 +18,14 @@ public class ApiControllerAdvice {
     @ExceptionHandler(CoreException.class)
     public ResponseEntity<String> handleCoreException(CoreException e) {
         switch (e.getErrorType().getLogLevel()) {
-            case ERROR -> log.error(CORE_EXCEPTION_FORMAT, e.getMessage(), e);
-            case WARN -> log.warn(CORE_EXCEPTION_FORMAT, e.getMessage(), e);
-            default -> log.info(CORE_EXCEPTION_FORMAT, e.getMessage(), e);
+            case ERROR:
+                log.error(CORE_EXCEPTION_FORMAT, e.getMessage(), e);
+                break;
+            case WARN:
+                log.warn(CORE_EXCEPTION_FORMAT, e.getMessage(), e);
+                break;
+            default:
+                log.info(CORE_EXCEPTION_FORMAT, e.getMessage(), e);
         }
         return new ResponseEntity<>(e.getErrorType().getMessage(), e.getErrorType().getStatus());
     }

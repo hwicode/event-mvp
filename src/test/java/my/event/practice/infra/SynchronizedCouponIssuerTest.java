@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +24,7 @@ class SynchronizedCouponIssuerTest {
     private static List<Coupon> createCoupons(List<String> memberIds) {
         return memberIds.stream()
                 .map(Coupon::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Test
