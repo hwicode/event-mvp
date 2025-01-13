@@ -26,4 +26,9 @@ public class Coupon {
     public int hashCode() {
         return Objects.hash(memberId);
     }
+
+    @Override
+    public String toString() {
+        return "Coupon[memberId=" + this.memberId + "]";
+    }
 }
