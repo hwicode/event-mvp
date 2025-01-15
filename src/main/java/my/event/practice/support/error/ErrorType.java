@@ -16,6 +16,9 @@ public enum ErrorType {
     MEMBER_NOT_IN_QUEUE_ERROR(HttpStatus.NOT_FOUND, "대기 큐에 없는 회원입니다.",
             LogLevel.INFO),
 
+    INVALID_MEMBER_ID_ERROR(HttpStatus.BAD_REQUEST, "회원 아이디가 유효하지 않습니다",
+            LogLevel.INFO),
+
     // 웹 예외
     INVALID_AUTH_TOKEN_ERROR(HttpStatus.BAD_REQUEST, "잘못된 형식의 토큰입니다.",
             LogLevel.INFO),
