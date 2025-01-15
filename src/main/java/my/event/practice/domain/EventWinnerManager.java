@@ -11,7 +11,7 @@ public class EventWinnerManager {
 
     private final CouponRepository couponRepository;
 
-    public boolean isEventWinner(String memberId) {
+    public boolean isEventWinner(Long memberId) {
         Optional<Coupon> coupon = couponRepository.findByMemberId(memberId);
         return coupon.isPresent();
     }

@@ -15,7 +15,7 @@ public class LoginController {
 
     @GetMapping("/login")
     @ResponseStatus(value = HttpStatus.OK)
-    public String login(@RequestParam String memberId) {
+    public String login(@RequestParam Long memberId) {
         return tokenManager.createToken(memberId);
     }
 }

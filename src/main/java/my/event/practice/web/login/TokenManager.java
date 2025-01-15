@@ -29,7 +29,7 @@ public class TokenManager {
         this.secretKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String createToken(String memberId) {
+    public String createToken(Long memberId) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + tokenExpiry);
 
@@ -41,9 +41,9 @@ public class TokenManager {
                 .compact();
     }
 
-    public String getMemberId(String token) {
+    public Long getMemberId(String token) {
         Claims claims = getClaims(token);
-        return claims.get(MEMBER_ID, String.class);
+        return claims.get(MEMBER_ID, Long.class);
     }
 
     private Claims getClaims(String token) {

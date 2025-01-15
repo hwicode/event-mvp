@@ -17,7 +17,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
     private final int repeatLimit;
     private final int pollingSize;
     private final int sleepMs;
-    private final LinkedList<String> queue;
+    private final LinkedList<Long> queue;
     private final AtomicBoolean isClose;
 
     public SynchronizedWaitingQueue(
@@ -32,7 +32,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
         isClose = new AtomicBoolean(false);
     }
 
-    public synchronized int add(String memberId) {
+    public synchronized int add(Long memberId) {
         if (isClose()) {
             throw new CoreException(ErrorType.QUEUE_CLOSED_ERROR);
         }
@@ -42,7 +42,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
     }
 
     // 순서를 정확하게 리턴할 필요가 없으므로 락 안검
-    public int getOrder(String memberId) {
+    public int getOrder(Long memberId) {
         int order = queue.indexOf(memberId);
         if (isClose() || order == -1) {
             throw new CoreException(ErrorType.MEMBER_NOT_IN_QUEUE_ERROR);
@@ -50,7 +50,7 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
         return order;
     }
 
-    public synchronized List<String> pollMemberIds(int repeatCount) {
+    public synchronized List<Long> pollMemberIds(int repeatCount) {
         if (isClose()) {
             return Collections.emptyList();
         }
@@ -62,8 +62,8 @@ public class SynchronizedWaitingQueue implements WaitingQueue {
         return getMemberIds(itemsToPoll);
     }
 
-    private List<String> getMemberIds(int itemsToPoll) {
-        List<String> memberIds = new ArrayList<>();
+    private List<Long> getMemberIds(int itemsToPoll) {
+        List<Long> memberIds = new ArrayList<>();
         for (int i = 0; i < itemsToPoll; i++) {
             memberIds.add(queue.poll());
         }

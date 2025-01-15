@@ -21,7 +21,7 @@ class SynchronizedCouponIssuerTest {
         return new SynchronizedCouponIssuer(couponLimit);
     }
 
-    private static List<Coupon> createCoupons(List<String> memberIds) {
+    private static List<Coupon> createCoupons(List<Long> memberIds) {
         return memberIds.stream()
                 .map(Coupon::new)
                 .collect(Collectors.toList());
@@ -33,10 +33,10 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 3;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        String memberId3 = "memberId3";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
+        List<Long> memberIds = List.of(
                 memberId1, memberId2, memberId3
         );
 
@@ -55,10 +55,10 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 0;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        String memberId3 = "memberId3";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
+        List<Long> memberIds = List.of(
                 memberId1, memberId2, memberId3
         );
 
@@ -75,10 +75,10 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 2;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        String memberId3 = "memberId3";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
+        List<Long> memberIds = List.of(
                 memberId1, memberId2, memberId3
         );
 
@@ -100,10 +100,10 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 2;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        String memberId3 = "memberId3";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
+        List<Long> memberIds = List.of(
                 memberId1, memberId2, memberId3
         );
 
@@ -122,7 +122,7 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 2;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        List<String> memberIds = List.of();
+        List<Long> memberIds = List.of();
 
         // when
         List<Coupon> coupons = synchronizedCouponIssuer.issue(memberIds);
@@ -137,10 +137,10 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 3;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        String memberId3 = "memberId3";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
+        List<Long> memberIds = List.of(
                 memberId1, memberId2, memberId3
         );
 
@@ -159,9 +159,9 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 1;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        List<Long> memberIds = List.of(
                 memberId1, memberId2
         );
 
@@ -179,8 +179,8 @@ class SynchronizedCouponIssuerTest {
         int couponLimit = 100;
         SynchronizedCouponIssuer synchronizedCouponIssuer = createCouponIssuer(couponLimit);
 
-        String memberId1 = "memberId1";
-        List<String> memberIds = List.of(
+        Long memberId1 = 1L;
+        List<Long> memberIds = List.of(
                 memberId1
         );
 

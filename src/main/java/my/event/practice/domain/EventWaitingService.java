@@ -10,12 +10,12 @@ public class EventWaitingService {
     private final DuplicateChecker duplicateChecker;
     private final WaitingQueue waitingQueue;
 
-    public int participate(String memberId) {
+    public int participate(Long memberId) {
         duplicateChecker.check(memberId);
         return waitingQueue.add(memberId);
     }
 
-    public int getOrder(String memberId) {
+    public int getOrder(Long memberId) {
         return waitingQueue.getOrder(memberId);
     }
 

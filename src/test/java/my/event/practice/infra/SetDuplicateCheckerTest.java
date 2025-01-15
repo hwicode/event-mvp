@@ -23,7 +23,7 @@ class SetDuplicateCheckerTest {
     @Test
     void 회원_아이디가_중복되지_않으면_false를_리턴한다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         SetDuplicateChecker setDuplicateChecker = createDuplicateChecker();
 
         // when
@@ -36,7 +36,7 @@ class SetDuplicateCheckerTest {
     @Test
     void 회원_아이디가_중복되면_예외가_발생한다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         SetDuplicateChecker setDuplicateChecker = createDuplicateChecker();
 
         // wnen
@@ -50,7 +50,7 @@ class SetDuplicateCheckerTest {
     @Test
     void 동시에_100명의_유저가_중복_검사를_할_수_있다() throws InterruptedException {
         // given
-        String memberId = "memberId";
+        long memberId = 1L;
         SetDuplicateChecker setDuplicateChecker = createDuplicateChecker();
 
         int threadCount = 100;
@@ -59,7 +59,7 @@ class SetDuplicateCheckerTest {
 
         // when
         for (int i = 1; i <= threadCount; i++) {
-            String newMemberId = "memberId" + i;
+            Long newMemberId = memberId + i;
             executorService.submit(() -> {
                 try {
                     setDuplicateChecker.check(newMemberId);

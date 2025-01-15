@@ -14,7 +14,7 @@ public class CouponManager {
     private final CouponIssuer couponIssuer;
     private final WaitingQueue waitingQueue;
 
-    public List<Coupon> issueCoupons(List<String> memberIds) {
+    public List<Coupon> issueCoupons(List<Long> memberIds) {
         List<Coupon> coupons = couponIssuer.issue(memberIds);
         log.info("[CouponManager][issueCoupons] Successfully issue coupons, coupons={}", coupons);
 

@@ -15,14 +15,14 @@ class TokenManagerTest {
     @Test
     void 회원_아이디로_토큰을_만들_수_있다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         TokenManager tokenManager = new TokenManager(1000000, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         // when
         String token = tokenManager.createToken(memberId);
 
         // then
-        String tokenMemberId = tokenManager.getMemberId(token);
+        Long tokenMemberId = tokenManager.getMemberId(token);
         assertThat(tokenMemberId).isEqualTo(memberId);
     }
 

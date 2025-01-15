@@ -14,13 +14,13 @@ public class WaitingQueuePoller {
 
     private final WaitingQueue waitingQueue;
 
-    public List<String> poll() {
+    public List<Long> poll() {
         int repeatLimit = waitingQueue.getRepeatLimit();
         int sleepMs = waitingQueue.getSleepMs();
 
         // 재시도
         for (int repeatCount = 1; repeatCount <= repeatLimit; repeatCount++) {
-            List<String> memberIds = waitingQueue.pollMemberIds(repeatCount);
+            List<Long> memberIds = waitingQueue.pollMemberIds(repeatCount);
 
             if (!memberIds.isEmpty()) {
                 log.info("[WaitingQueuePoller][poll] Success on repeatCount={}, memberIds={}", repeatCount, memberIds);

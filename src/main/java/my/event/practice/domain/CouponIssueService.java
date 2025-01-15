@@ -14,7 +14,7 @@ public class CouponIssueService {
     private final CouponRepository couponRepository;
 
     public List<Coupon> issueCoupons() {
-        List<String> memberIds = waitingQueuePoller.poll();
+        List<Long> memberIds = waitingQueuePoller.poll();
         List<Coupon> coupons = couponManager.issueCoupons(memberIds);
         return couponRepository.saveAll(coupons);
     }

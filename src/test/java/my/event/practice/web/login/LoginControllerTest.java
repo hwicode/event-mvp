@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,17 +29,17 @@ class LoginControllerTest {
     @Test
     void 로그인을_요청하면_200_상태코드가_리턴된다() throws Exception {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         String token = "token";
 
         mock(TokenManager.class);
-        given(tokenManager.createToken(anyString()))
+        given(tokenManager.createToken(anyLong()))
                 .willReturn(token);
 
         // when
         ResultActions perform = mockMvc.perform(
                 MockMvcRequestBuilders.get("/login")
-                        .queryParam(memberId, memberId)
+                        .queryParam("memberId", String.valueOf(memberId))
         );
 
         // then
@@ -49,7 +48,7 @@ class LoginControllerTest {
                         MockMvcResultMatchers.content().string(token)
                 );
 
-        verify(tokenManager, times(1)).createToken(anyString());
+        verify(tokenManager, times(1)).createToken(anyLong());
     }
 
     @Test

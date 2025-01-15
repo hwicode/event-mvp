@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface WaitingQueue {
 
-    int add(String memberId);
+    int add(Long memberId);
 
-    int getOrder(String memberId);
+    int getOrder(Long memberId);
 
-    List<String> pollMemberIds(int repeatCount);
+    List<Long> pollMemberIds(int repeatCount);
 
     boolean close();
 

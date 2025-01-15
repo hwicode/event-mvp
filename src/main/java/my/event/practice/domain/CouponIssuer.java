@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CouponIssuer {
 
-    List<Coupon> issue(List<String> memberIds);
+    List<Coupon> issue(List<Long> memberIds);
 
     boolean isClose();
 }

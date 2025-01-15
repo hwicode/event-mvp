@@ -22,7 +22,7 @@ public class SynchronizedCouponIssuer implements CouponIssuer {
         isClose = false;
     }
 
-    public synchronized List<Coupon> issue(List<String> memberIds) {
+    public synchronized List<Coupon> issue(List<Long> memberIds) {
         if (couponLimit == 0) return new ArrayList<>();
         if (couponLimit >= memberIds.size()) {
             couponLimit -= memberIds.size();
@@ -36,7 +36,7 @@ public class SynchronizedCouponIssuer implements CouponIssuer {
 
         List<Coupon> coupons = new ArrayList<>();
         for (int i = 0; i < couponLimit; i++) {
-            String id = memberIds.get(i);
+            Long id = memberIds.get(i);
             coupons.add(new Coupon(id));
         }
         couponLimit = 0;

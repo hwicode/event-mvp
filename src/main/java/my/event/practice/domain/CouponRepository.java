@@ -6,5 +6,5 @@ import java.util.Optional;
 public interface CouponRepository {
 
     List<Coupon> saveAll(List<Coupon> coupons);
-    Optional<Coupon> findByMemberId(String memberId);
+    Optional<Coupon> findByMemberId(Long memberId);
 }

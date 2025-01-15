@@ -21,7 +21,7 @@ public class EventController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/event/attend")
-    public int participateEvent(@LoginUser String memberId) {
+    public int participateEvent(@LoginUser Long memberId) {
         log.info("[EventController][participateEvent] Received request to participate event, memberId={}", memberId);
         int waitingOrder = eventWaitingService.participate(memberId);
         log.info("[EventController][participateEvent] Returning Member waiting order, memberId={}, waitingOrder={}", memberId, waitingOrder);
@@ -30,7 +30,7 @@ public class EventController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping("/event/waiting-order")
-    public int getEventWaitingOrder(@LoginUser String memberId) {
+    public int getEventWaitingOrder(@LoginUser Long memberId) {
         log.info("[EventController][getEventWaitingOrder] Received request for waiting order, memberId={}", memberId);
         int waitingOrder = eventWaitingService.getOrder(memberId);
         log.info("[EventController][getEventWaitingOrder] Returning Member waiting order, memberId={}, waitingOrder={}", memberId, waitingOrder);
@@ -39,7 +39,7 @@ public class EventController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping("/event/winner")
-    public boolean isEventWinner(@LoginUser String memberId) {
+    public boolean isEventWinner(@LoginUser Long memberId) {
         log.info("[EventController][isEventWinner] Received request for Checking if member is a winner, memberId={}", memberId);
         boolean isEventWinner = eventWinnerService.isEventWinner(memberId);
         log.info("[EventController][isEventWinner] Returning Winner check result, memberId={}, isEventWinner={}", memberId, isEventWinner);

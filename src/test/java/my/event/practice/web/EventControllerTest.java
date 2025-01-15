@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -42,14 +43,14 @@ class EventControllerTest {
     @Test
     void 이벤트_참석을_요청하면_201_상태코드가_리턴된다() throws Exception {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         String token = "token";
         int waitingOrder = 1;
 
         given(tokenManager.getMemberId(anyString()))
                 .willReturn(memberId);
 
-        given(eventWaitingService.participate(anyString()))
+        given(eventWaitingService.participate(anyLong()))
                 .willReturn(waitingOrder);
 
         // when
@@ -67,20 +68,20 @@ class EventControllerTest {
                 );
 
         verify(tokenManager, times(1)).getMemberId(anyString());
-        verify(eventWaitingService, times(1)).participate(anyString());
+        verify(eventWaitingService, times(1)).participate(anyLong());
     }
 
     @Test
     void 이벤트_대기_순서를_요청하면_200_상태코드가_리턴된다() throws Exception {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         String token = "token";
         int waitingOrder = 1;
 
         given(tokenManager.getMemberId(anyString()))
                 .willReturn(memberId);
 
-        given(eventWaitingService.getOrder(anyString()))
+        given(eventWaitingService.getOrder(anyLong()))
                 .willReturn(waitingOrder);
 
         // when
@@ -98,20 +99,20 @@ class EventControllerTest {
                 );
 
         verify(tokenManager, times(1)).getMemberId(anyString());
-        verify(eventWaitingService, times(1)).getOrder(anyString());
+        verify(eventWaitingService, times(1)).getOrder(anyLong());
     }
 
     @Test
     void 이벤트_당첨을_요청하면_200_상태코드가_리턴된다() throws Exception {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         String token = "token";
         boolean isWinner = true;
 
         given(tokenManager.getMemberId(anyString()))
                 .willReturn(memberId);
 
-        given(eventWinnerService.isEventWinner(anyString()))
+        given(eventWinnerService.isEventWinner(anyLong()))
                 .willReturn(isWinner);
 
         // when
@@ -129,7 +130,7 @@ class EventControllerTest {
                 );
 
         verify(tokenManager, times(1)).getMemberId(anyString());
-        verify(eventWinnerService, times(1)).isEventWinner(anyString());
+        verify(eventWinnerService, times(1)).isEventWinner(anyLong());
     }
 
 }

@@ -4,13 +4,13 @@ import java.util.Objects;
 
 public class Coupon {
 
-    private final String memberId;
+    private final Long memberId;
 
-    public Coupon(String memberId) {
+    public Coupon(Long memberId) {
         this.memberId = memberId;
     }
 
-    public String getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 

@@ -25,12 +25,12 @@ class WaitingQueuePollerTest {
     void 대기열_poller에서_회원들을_가져올_수_있다() {
         // given
         WaitingQueue waitingQueue = createWaitingQueue(3);
-        when(waitingQueue.pollMemberIds(1)).thenReturn(List.of("member1"));
+        when(waitingQueue.pollMemberIds(1)).thenReturn(List.of(1L));
 
         WaitingQueuePoller waitingQueuePoller = new WaitingQueuePoller(waitingQueue);
 
         // when
-        List<String> memberIds = waitingQueuePoller.poll();
+        List<Long> memberIds = waitingQueuePoller.poll();
 
         // then
         assertThat(memberIds).hasSize(1);
@@ -42,12 +42,12 @@ class WaitingQueuePollerTest {
         // given
         WaitingQueue waitingQueue = createWaitingQueue(3);
         when(waitingQueue.pollMemberIds(1)).thenReturn(Collections.emptyList());
-        when(waitingQueue.pollMemberIds(2)).thenReturn(List.of("member1"));
+        when(waitingQueue.pollMemberIds(2)).thenReturn(List.of(1L));
 
         WaitingQueuePoller waitingQueuePoller = new WaitingQueuePoller(waitingQueue);
 
         // when
-        List<String> memberIds = waitingQueuePoller.poll();
+        List<Long> memberIds = waitingQueuePoller.poll();
 
         // then
         assertThat(memberIds).hasSize(1);
@@ -64,7 +64,7 @@ class WaitingQueuePollerTest {
         WaitingQueuePoller waitingQueuePoller = new WaitingQueuePoller(waitingQueue);
 
         // when
-        List<String> memberIds = waitingQueuePoller.poll();
+        List<Long> memberIds = waitingQueuePoller.poll();
 
         // then
         assertThat(memberIds).isEmpty();

@@ -13,13 +13,13 @@ import java.util.Set;
 @Component
 public class SetDuplicateChecker implements DuplicateChecker {
 
-    private final Set<String> idStore;
+    private final Set<Long> idStore;
 
     public SetDuplicateChecker() {
         this.idStore = new HashSet<>();
     }
 
-    public synchronized boolean check(String memberId) {
+    public synchronized boolean check(Long memberId) {
         if (idStore.contains(memberId)) {
             throw new CoreException(ErrorType.DUPLICATED_MEMBER_ERROR);
         }

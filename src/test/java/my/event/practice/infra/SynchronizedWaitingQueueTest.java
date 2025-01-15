@@ -28,7 +28,7 @@ class SynchronizedWaitingQueueTest {
     @Test
     void 대기열에_회원_아이디를_추가할_수_있다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when
@@ -42,7 +42,7 @@ class SynchronizedWaitingQueueTest {
     void 대기열에_회원_아이디를_추가하면_대기_순번을_알_수_있다() {
         // given
         int waitingPerson = 3;
-        String memberId = "memberId";
+        long memberId = 1L;
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         for (int i = 0; i < waitingPerson; i++) {
@@ -59,7 +59,7 @@ class SynchronizedWaitingQueueTest {
     @Test
     void 회원_아이디를_추가할_때_대기열이_닫혀있으면_에러가_발생한다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when
@@ -73,7 +73,7 @@ class SynchronizedWaitingQueueTest {
     @Test
     void 대기열에서_회원의_순서를_대략적으로_가져올_수_있다() {
         // given
-        String memberId = "memberId";
+        long memberId = 1L;
         int count = 100;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
@@ -84,8 +84,8 @@ class SynchronizedWaitingQueueTest {
         }
 
         // then
-        String firstMember = memberId + 1;
-        String lastMember = memberId + 100;
+        long firstMember = memberId + 1;
+        long lastMember = memberId + 100;
         assertThat(synchronizedWaitingQueue.getOrder(firstMember)).isZero();
         assertThat(synchronizedWaitingQueue.getOrder(lastMember)).isEqualTo(99);
     }
@@ -93,7 +93,7 @@ class SynchronizedWaitingQueueTest {
     @Test
     void 대기열에서_회원의_순서를_가져올_때_회원이_존재하지_않으면_에러가_발생한다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
@@ -105,7 +105,7 @@ class SynchronizedWaitingQueueTest {
     @Test
     void 대기열에서_회원의_순서를_가져올_때_대기열이_닫혀있으면_에러가_발생한다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(3, 1);
 
         // when
@@ -121,7 +121,7 @@ class SynchronizedWaitingQueueTest {
         // given
         int count = 3;
         int repeatCount = 1;
-        String memberId = "memberId";
+        long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, count);
         for (int i = 0; i < count; i++) {
@@ -129,7 +129,7 @@ class SynchronizedWaitingQueueTest {
         }
 
         // when
-        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
+        List<Long> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).hasSize(count);
@@ -145,7 +145,7 @@ class SynchronizedWaitingQueueTest {
         synchronizedWaitingQueue.close();
 
         // when
-        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
+        List<Long> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).isEmpty();
@@ -157,7 +157,7 @@ class SynchronizedWaitingQueueTest {
         int repeatCount = 1;
         int pollSize = 3;
         int lessPollSize = pollSize - 1;
-        String memberId = "memberId";
+        long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
         for (int i = 0; i < lessPollSize; i++) {
@@ -165,7 +165,7 @@ class SynchronizedWaitingQueueTest {
         }
 
         // when
-        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(0);
+        List<Long> memberIds = synchronizedWaitingQueue.pollMemberIds(0);
 
         // then
         assertThat(memberIds).isEmpty();
@@ -176,7 +176,7 @@ class SynchronizedWaitingQueueTest {
         // given
         int repeatCount = 1;
         int pollSize = 3;
-        String memberId = "memberId";
+        long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
         for (int i = 0; i < pollSize; i++) {
@@ -184,7 +184,7 @@ class SynchronizedWaitingQueueTest {
         }
 
         // when
-        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(0);
+        List<Long> memberIds = synchronizedWaitingQueue.pollMemberIds(0);
 
         // then
         assertThat(memberIds).hasSize(pollSize);
@@ -196,7 +196,7 @@ class SynchronizedWaitingQueueTest {
         int repeatCount = 1;
         int pollSize = 3;
         int lessPollSize = pollSize - 1;
-        String memberId = "memberId";
+        long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
         for (int i = 0; i < lessPollSize; i++) {
@@ -204,7 +204,7 @@ class SynchronizedWaitingQueueTest {
         }
 
         // when
-        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
+        List<Long> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).hasSize(lessPollSize);
@@ -219,7 +219,7 @@ class SynchronizedWaitingQueueTest {
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
         // when
-        List<String> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
+        List<Long> memberIds = synchronizedWaitingQueue.pollMemberIds(repeatCount);
 
         // then
         assertThat(memberIds).isEmpty();
@@ -261,7 +261,7 @@ class SynchronizedWaitingQueueTest {
         // given
         int repeatCount = 1;
         int pollSize = 3;
-        String memberId = "memberId";
+        long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
@@ -271,7 +271,7 @@ class SynchronizedWaitingQueueTest {
 
         // when
         for (int i = 1; i <= threadCount; i++) {
-            String newMemberId = "memberId" + i;
+            Long newMemberId = memberId + i;
             executorService.submit(() -> {
                 try {
                     synchronizedWaitingQueue.add(newMemberId);
@@ -293,7 +293,7 @@ class SynchronizedWaitingQueueTest {
         // given
         int repeatCount = 1;
         int pollSize = 3;
-        String memberId = "memberId";
+        long memberId = 1L;
 
         SynchronizedWaitingQueue synchronizedWaitingQueue = createWaitingQueue(repeatCount, pollSize);
 
@@ -306,7 +306,7 @@ class SynchronizedWaitingQueueTest {
 
         // when
         for (int i = 1; i <= threadCount; i++) {
-            String newMemberId = "memberId" + i;
+            Long newMemberId = memberId + i;
             // 대기열에 유저 추가
             executorService.submit(() -> {
                 try {

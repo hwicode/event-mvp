@@ -38,9 +38,9 @@ class JdbcCouponRepositoryTest {
     void 쿠폰_저장소에_여러_개의_쿠폰을_한_번에_저장할_수_있다() {
         // given
         Time time = createTime();
-        String memberId1 = "memberId1";
-        String memberId2 = "memberId2";
-        String memberId3 = "memberId3";
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
         JdbcCouponRepository couponRepository = new JdbcCouponRepository(jdbcTemplate, time);
 
         // when
@@ -62,7 +62,7 @@ class JdbcCouponRepositoryTest {
     void 쿠폰_저장소에_존재하지_않은_쿠폰을_조회하면_빈_옵셔널을_리턴한다() {
         // given
         Time time = createTime();
-        String memberId1 = "memberId1";
+        Long memberId1 = 1L;
         JdbcCouponRepository couponRepository = new JdbcCouponRepository(jdbcTemplate, time);
 
         // when

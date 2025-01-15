@@ -17,7 +17,7 @@ class CouponManagerTest {
     @Test
     void 쿠폰_매니저에서_쿠폰을_발급할_수_있다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         CouponIssuer couponIssuer = mock(CouponIssuer.class);
         when(couponIssuer.issue(anyList())).thenReturn(
                 List.of(new Coupon(memberId))

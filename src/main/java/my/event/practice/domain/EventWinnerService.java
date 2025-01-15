@@ -9,7 +9,7 @@ public class EventWinnerService {
 
     private final EventWinnerManager eventWinnerManager;
 
-    public boolean isEventWinner(String memberId) {
+    public boolean isEventWinner(Long memberId) {
         return eventWinnerManager.isEventWinner(memberId);
     }
 }

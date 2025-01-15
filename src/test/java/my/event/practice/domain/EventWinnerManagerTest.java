@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -18,10 +18,10 @@ class EventWinnerManagerTest {
     @Test
     void 이벤트_당첨_관리자는_이벤트_당첨자를_알_수_있다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         Coupon coupon = new Coupon(memberId);
         CouponRepository couponRepository = mock(CouponRepository.class);
-        when(couponRepository.findByMemberId(anyString())).thenReturn(
+        when(couponRepository.findByMemberId(anyLong())).thenReturn(
                 Optional.of(coupon)
         );
 
@@ -37,9 +37,9 @@ class EventWinnerManagerTest {
     @Test
     void 이벤트_당첨_관리자는_이벤트_비당첨자를_알_수_있다() {
         // given
-        String memberId = "memberId";
+        Long memberId = 1L;
         CouponRepository couponRepository = mock(CouponRepository.class);
-        when(couponRepository.findByMemberId(anyString())).thenReturn(
+        when(couponRepository.findByMemberId(anyLong())).thenReturn(
                 Optional.empty()
         );
 
