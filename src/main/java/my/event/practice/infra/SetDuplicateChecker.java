@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-@Component
+//@Component -> 스프링 컨테이너에 없음
 public class SetDuplicateChecker implements DuplicateChecker {
 
     private final Set<Long> idStore;
