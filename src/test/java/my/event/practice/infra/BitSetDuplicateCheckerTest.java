@@ -22,7 +22,7 @@ class BitSetDuplicateCheckerTest {
         return new BitSetDuplicateChecker(size);
     }
 
-    @ValueSource(longs = {1L, 50L, 100L})
+    @ValueSource(longs = {1L, 50L, 99L})
     @ParameterizedTest
     void 회원_아이디가_중복되지_않으면_false를_리턴한다(Long memberId) {
         // given
@@ -36,7 +36,7 @@ class BitSetDuplicateCheckerTest {
         assertThat(isDuplicate).isFalse();
     }
 
-    @ValueSource(longs = {0L, 101L, -1L, -50L})
+    @ValueSource(longs = {100L, 101L, -1L, -50L})
     @ParameterizedTest
     void 회원_아이디가_유효하지_않으면_예외가_발생한다(Long memberId) {
         // given

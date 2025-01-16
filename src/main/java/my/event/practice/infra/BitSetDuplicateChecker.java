@@ -20,7 +20,7 @@ public class BitSetDuplicateChecker implements DuplicateChecker {
 
     @Override
     public synchronized boolean check(Long memberId) {
-        if (memberId <= 0 || memberId > maxSize) {
+        if (memberId < 0 || memberId >= maxSize) {
             throw new CoreException(ErrorType.INVALID_MEMBER_ID_ERROR);
         }
 
