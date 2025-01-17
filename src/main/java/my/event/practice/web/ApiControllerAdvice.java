@@ -39,7 +39,7 @@ public class ApiControllerAdvice {
     // 쿼리 파라미터 없이 HTTP 요청을 보내면 발생
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<String> handleMissingServletRequestParameterException(Exception e) {
-        log.error(EXCEPTION_FORMAT, e.getMessage(), e);
+        log.warn(EXCEPTION_FORMAT, e.getMessage(), e);
         return new ResponseEntity<>(ErrorType.MISSING_PARAMETER_ERROR.getMessage(), ErrorType.MISSING_PARAMETER_ERROR.getStatus());
     }
 
