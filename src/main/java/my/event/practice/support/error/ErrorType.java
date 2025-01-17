@@ -23,12 +23,6 @@ public enum ErrorType {
             LogLevel.ERROR),
 
     // 웹 예외
-    INVALID_AUTH_TOKEN_ERROR(HttpStatus.BAD_REQUEST, "잘못된 형식의 토큰입니다.",
-            LogLevel.INFO),
-
-    EMPTY_AUTHORIZATION_HEADER_ERROR(HttpStatus.BAD_REQUEST, "HTTP AUTHORIZATION 헤더가 비어있습니다.",
-            LogLevel.INFO),
-
     AUTH_FAILED(HttpStatus.UNAUTHORIZED, "인증에 실패하였습니다.",
             LogLevel.INFO),
 

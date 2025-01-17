@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.event.practice.domain.EventWaitingService;
 import my.event.practice.domain.EventWinnerService;
-import my.event.practice.web.login.LoginUser;
+import my.event.practice.web.login.LoginMemberId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ public class EventController {
 
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/event/attend")
-    public int participateEvent(@LoginUser Long memberId) {
+    public int participateEvent(@LoginMemberId Long memberId) {
         log.info("[EventController][participateEvent] Received request to participate event, memberId={}", memberId);
         int waitingOrder = eventWaitingService.participate(memberId);
         log.info("[EventController][participateEvent] Returning Member waiting order, memberId={}, waitingOrder={}", memberId, waitingOrder);
@@ -30,7 +30,7 @@ public class EventController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping("/event/waiting-order")
-    public int getEventWaitingOrder(@LoginUser Long memberId) {
+    public int getEventWaitingOrder(@LoginMemberId Long memberId) {
         log.info("[EventController][getEventWaitingOrder] Received request for waiting order, memberId={}", memberId);
         int waitingOrder = eventWaitingService.getOrder(memberId);
         log.info("[EventController][getEventWaitingOrder] Returning Member waiting order, memberId={}, waitingOrder={}", memberId, waitingOrder);
@@ -39,7 +39,7 @@ public class EventController {
 
     @ResponseStatus(value = HttpStatus.OK)
     @GetMapping("/event/winner")
-    public boolean isEventWinner(@LoginUser Long memberId) {
+    public boolean isEventWinner(@LoginMemberId Long memberId) {
         log.info("[EventController][isEventWinner] Received request for Checking if member is a winner, memberId={}", memberId);
         boolean isEventWinner = eventWinnerService.isEventWinner(memberId);
         log.info("[EventController][isEventWinner] Returning Winner check result, memberId={}, isEventWinner={}", memberId, isEventWinner);
