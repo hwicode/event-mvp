@@ -5,14 +5,11 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SuppressWarnings({"InnerClassMayBeStatic", "NonAsciiCharacters"})
@@ -23,32 +20,24 @@ class LoginControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
-    TokenManager tokenManager;
-
+    // JSESSIONID은 톰캣에서 관리되므로 테스트 불가, 대신 세션 속성을 통해 테스트 진행
     @Test
     void 로그인을_요청하면_200_상태코드가_리턴된다() throws Exception {
         // given
         Long memberId = 1L;
-        String token = "token";
-
-        mock(TokenManager.class);
-        given(tokenManager.createToken(anyLong()))
-                .willReturn(token);
+        String memberIdString = "memberId";
 
         // when
         ResultActions perform = mockMvc.perform(
                 MockMvcRequestBuilders.get("/login")
-                        .queryParam("memberId", String.valueOf(memberId))
+                        .queryParam(memberIdString, String.valueOf(memberId))
         );
 
         // then
         perform.andExpect(status().isOk())
                 .andExpect(
-                        MockMvcResultMatchers.content().string(token)
+                        MockMvcResultMatchers.request().sessionAttribute(memberIdString, memberId)
                 );
-
-        verify(tokenManager, times(1)).createToken(anyLong());
     }
 
     @Test

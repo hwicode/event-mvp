@@ -19,6 +19,9 @@ public enum ErrorType {
     INVALID_MEMBER_ID_ERROR(HttpStatus.BAD_REQUEST, "회원 아이디가 유효하지 않습니다",
             LogLevel.INFO),
 
+    DEFAULT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에서 예기치 못한 에러가 발생했습니다.",
+            LogLevel.ERROR),
+
     // 웹 예외
     INVALID_AUTH_TOKEN_ERROR(HttpStatus.BAD_REQUEST, "잘못된 형식의 토큰입니다.",
             LogLevel.INFO),
@@ -26,11 +29,14 @@ public enum ErrorType {
     EMPTY_AUTHORIZATION_HEADER_ERROR(HttpStatus.BAD_REQUEST, "HTTP AUTHORIZATION 헤더가 비어있습니다.",
             LogLevel.INFO),
 
-    MISSING_PARAMETER_ERROR(HttpStatus.BAD_REQUEST, "회원 아이디 없이 로그인 요청을 보냈습니다.",
+    AUTH_FAILED(HttpStatus.UNAUTHORIZED, "인증에 실패하였습니다.",
             LogLevel.INFO),
 
-    DEFAULT_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에서 예기치 못한 에러가 발생했습니다.",
-            LogLevel.ERROR);
+    MISSING_MEMBER_ID(HttpStatus.UNAUTHORIZED, "세션에 회원 정보가 존재하지 않습니다.",
+            LogLevel.INFO),
+
+    MISSING_PARAMETER_ERROR(HttpStatus.BAD_REQUEST, "회원 아이디 없이 로그인 요청을 보냈습니다.",
+            LogLevel.INFO);
 
     private final HttpStatus status;
 

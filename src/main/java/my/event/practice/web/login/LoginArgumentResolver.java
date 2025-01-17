@@ -4,19 +4,19 @@ import lombok.RequiredArgsConstructor;
 import my.event.practice.support.error.CoreException;
 import my.event.practice.support.error.ErrorType;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Component
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
-
-    private static final String BEARER = "Bearer ";
-    private final TokenManager tokenManager;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -25,15 +25,13 @@ public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        String authorization = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        String token = extractAccessToken(authorization);
-        return tokenManager.getMemberId(token);
-    }
+        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+        if (request == null) throw new CoreException(ErrorType.AUTH_FAILED);
 
-    private String extractAccessToken(String authorization) {
-        if (authorization == null) {
-            throw new CoreException(ErrorType.EMPTY_AUTHORIZATION_HEADER_ERROR);
-        }
-        return authorization.replace(BEARER, "");
+        HttpSession session = request.getSession(false);
+        if (session == null) throw new CoreException(ErrorType.AUTH_FAILED);
+
+        return Optional.ofNullable(session.getAttribute("memberId"))
+                .orElseThrow(() -> new CoreException(ErrorType.MISSING_MEMBER_ID));
     }
 }
