@@ -36,12 +36,17 @@ public class JdbcCouponRepository implements CouponRepository {
     }
 
     public Optional<Coupon> findByMemberId(Long memberId) {
-        String sql = "SELECT member_id, created_at FROM coupon WHERE member_id = ?";
+        String sql = "SELECT member_id FROM coupon WHERE member_id = ?";
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, couponRowMapper(), memberId));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public List<Coupon> findAll() {
+        String sql = "SELECT member_id FROM coupon";
+        return jdbcTemplate.query(sql, couponRowMapper());
     }
 
     private RowMapper<Coupon> couponRowMapper() {

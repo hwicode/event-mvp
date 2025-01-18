@@ -72,4 +72,29 @@ class JdbcCouponRepositoryTest {
         assertThat(coupon).isEmpty();
     }
 
+    @Test
+    void 쿠폰_저장소에서_여러_개의_쿠폰을_한_번에_조회할_수_있다() {
+        // given
+        Time time = createTime();
+        Long memberId1 = 1L;
+        Long memberId2 = 2L;
+        Long memberId3 = 3L;
+        JdbcCouponRepository couponRepository = new JdbcCouponRepository(jdbcTemplate, time);
+
+        List<Coupon> coupons = List.of(
+                new Coupon(memberId1),
+                new Coupon(memberId2),
+                new Coupon(memberId3)
+        );
+        couponRepository.saveAll(coupons);
+
+        // when
+        List<Coupon> savedCoupons = couponRepository.findAll();
+
+        // then
+        assertThat(savedCoupons)
+                .hasSize(3)
+                .containsAll(coupons);
+    }
+
 }
