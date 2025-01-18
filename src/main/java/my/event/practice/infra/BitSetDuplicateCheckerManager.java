@@ -4,30 +4,28 @@ import lombok.extern.slf4j.Slf4j;
 import my.event.practice.domain.DuplicateChecker;
 import my.event.practice.support.error.CoreException;
 import my.event.practice.support.error.ErrorType;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// 초기화 로직으로 인해 수동 빈 등록으로 변경
 @Slf4j
-@Component
 public class BitSetDuplicateCheckerManager implements DuplicateChecker {
 
     private final List<BitSetDuplicateChecker> idStores;
     private final long totalSize;
     private final int bitSetSize;
 
-    public BitSetDuplicateCheckerManager(
-            @Value("${member.size}") long memberSize,
-            @Value("${bit-set.size:64}") int bitSetSize
-    ) {
+    public BitSetDuplicateCheckerManager(long memberSize, int bitSetSize, List<Long> initMemberIds) {
         this.idStores = new ArrayList<>();
 
         // 비트셋은 0부터 시작하므로 마지막 값이 포함되지 않는다 -> 마지막 맴버를 포함하기 위해 1을 더함
         this.totalSize = memberSize + 1;
         this.bitSetSize = bitSetSize;
         setUp(this.totalSize, bitSetSize);
+
+        // 초기화: 이미 쿠폰 발행한 유저 추가하기
+        initMemberIds.forEach(this::check);
     }
 
     private void setUp(long memberSize, int bitSetSize) {

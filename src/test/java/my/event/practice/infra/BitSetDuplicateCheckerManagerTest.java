@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,8 +20,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class BitSetDuplicateCheckerManagerTest {
 
-    private static BitSetDuplicateCheckerManager createDuplicateChecker(long memberSize, int bitSetSize) {
-        return new BitSetDuplicateCheckerManager(memberSize, bitSetSize);
+    private static BitSetDuplicateCheckerManager createDuplicateChecker(long memberSize, int bitSetSize, List<Long> memberIds) {
+        return new BitSetDuplicateCheckerManager(memberSize, bitSetSize, memberIds);
     }
 
     @MethodSource("provideMemberSizeAndResult")
@@ -27,7 +29,7 @@ class BitSetDuplicateCheckerManagerTest {
     void 비트셋_매니저는_비트셋의_생성_개수를_알맞게_조절할_수_있다(long memberSize, int result) {
         // given
         int bitSetSize = 64;
-        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize);
+        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize, Collections.emptyList());
 
         // when
         int idStoresSize = duplicateChecker.getIdStoresSize();
@@ -54,7 +56,7 @@ class BitSetDuplicateCheckerManagerTest {
         // given
         long memberSize = 100;
         int bitSetSize = 64;
-        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize);
+        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize, Collections.emptyList());
 
         // when then
         assertThatThrownBy(() -> duplicateChecker.check(memberId))
@@ -67,7 +69,7 @@ class BitSetDuplicateCheckerManagerTest {
         // given
         long memberSize = 10_000;
         int bitSetSize = 64;
-        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize);
+        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize, Collections.emptyList());
 
         // when
         int selectedCheckerIndex = duplicateChecker.getSelectedCheckerIndex(memberId);
@@ -92,7 +94,7 @@ class BitSetDuplicateCheckerManagerTest {
         // given
         long memberSize = 10_000;
         int bitSetSize = 64;
-        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize);
+        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize, Collections.emptyList());
 
         // when
         long adjustedMemberId = duplicateChecker.getAdjustedMemberId(memberId);
@@ -108,6 +110,29 @@ class BitSetDuplicateCheckerManagerTest {
                 arguments(640, 0),
                 arguments(641, 1),
                 arguments(639, 63)
+        );
+    }
+
+    @MethodSource("provideMemberIds")
+    @ParameterizedTest
+    void 초기화_로직에서_추가된_회원이_중복_요청을_보낼_경우_예외가_발생한다(List<Long> memberIds) {
+        // given
+        long memberSize = 100;
+        int bitSetSize = 64;
+        BitSetDuplicateCheckerManager duplicateChecker = createDuplicateChecker(memberSize, bitSetSize, memberIds);
+
+        // when then
+        for (long memberId : memberIds) {
+            assertThatThrownBy(() -> duplicateChecker.check(memberId))
+                    .isInstanceOf(CoreException.class);
+        }
+    }
+
+    private static Stream<List<Long>> provideMemberIds() {
+        return Stream.of(
+                List.of(1L, 2L, 4L, 7L, 14L, 60L),
+                List.of(4L, 5L, 6L, 10L, 20L, 50L),
+                List.of(7L, 8L, 9L, 12L, 5L, 2L)
         );
     }
 }
