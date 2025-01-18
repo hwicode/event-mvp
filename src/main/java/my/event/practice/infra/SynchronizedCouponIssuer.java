@@ -2,22 +2,18 @@ package my.event.practice.infra;
 
 import my.event.practice.domain.Coupon;
 import my.event.practice.domain.CouponIssuer;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+// 초기화 로직으로 인해 수동 빈 등록으로 변경
 public class SynchronizedCouponIssuer implements CouponIssuer {
 
     private int couponLimit;
     private volatile boolean isClose;
 
-    public SynchronizedCouponIssuer(
-            @Value("${coupon.limit:100}")int couponLimit
-    ) {
+    public SynchronizedCouponIssuer(int couponLimit) {
         this.couponLimit = couponLimit;
         isClose = false;
     }
